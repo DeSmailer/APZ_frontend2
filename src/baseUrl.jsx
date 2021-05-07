@@ -1,4 +1,4 @@
-export const chatConnectionUrl = 'https://localhost:44332';
+export const chatConnectionUrl = 'https://apzbackend.azurewebsites.net';
 export const baseUrl = chatConnectionUrl + '/api';
 
 // export const baseUrl = 'https://24c1bc285c30.ngrok.io/api/';
