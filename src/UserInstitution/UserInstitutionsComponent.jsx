@@ -5,9 +5,8 @@ import { baseUrl, getCookie } from '../baseUrl';
 import { DataGrid } from "@material-ui/data-grid"
 
 
-
 class UserInstitutionsComponent extends Component {
-
+ 
   constructor(props) {
     super(props);
 
@@ -20,26 +19,24 @@ class UserInstitutionsComponent extends Component {
         { field: 'isWorking', headerName: SetWord('IsWorking'), width: 160 }
       ],
       rows: [],
-      currentRow: {
-        id: -1
-      }
+      selectionRowId: "",
+      currentRow:""
     }
 
     this.dataGridDemo = this.dataGridDemo.bind(this);
     this.setSelection = this.setSelection.bind(this);
     this.setSelection = this.setSelection.bind(this);
-    this.signInLikeEmployee = this.signInLikeEmployee.bind(this);
   }
 
   setSelection(row) {
     this.setState({ currentRow: row });
     console.log(this.state.currentRow)
-    console.log("Ид " + this.state.currentRow.institutionId)
   }
 
   signInLikeEmployee() {
     console.log(this.state.currentRow.role)
     console.log(this.state.currentRow.institutionId)
+    console.log("signInLikeEmployee")
 
     const body = {
       Token: getCookie('token'),
@@ -84,9 +81,18 @@ class UserInstitutionsComponent extends Component {
 
         </div>
         <div style={{ height: 620, width: '100%' }}>
-          <DataGrid rows={state.rows} columns={state.columns} pageSize={10}
-            onSelectionChange={(newSelection) => { this.setSelection(this.state.rows[newSelection.rowIds]); }}
+          <DataGrid 
+          rows={state.rows} 
+          columns={state.columns} 
+          pageSize={10}
+          onSelectionModelChange={(newSelection) => {
+            this.setState({ selectionRowId: newSelection.selectionModel});
+            this.setSelection(this.state.rows[this.state.selectionRowId]);
+            
+            console.log(newSelection)
+        }}
           />
+          
         </div>
         <div >
           <Link to={`/addInstitution`}>
