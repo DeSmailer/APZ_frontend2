@@ -1,7 +1,8 @@
 export const chatConnectionUrl = 'https://apzbackend.azurewebsites.net';
 export const baseUrl = chatConnectionUrl + '/api';
 
-// export const baseUrl = 'https://24c1bc285c30.ngrok.io/api/';
+// export const azure = https://apzbackend.azurewebsites.net
+// export const local = https://localhost:5001
 export const getCookie = (name) => {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');

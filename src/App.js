@@ -2,7 +2,9 @@ import React from 'react';
 //import Chat from './Chat/Chat';
 import { BrowserRouter } from 'react-router-dom';
 import Main from './MainComponent';
+import 'rsuite/dist/styles/rsuite-default.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   return (

@@ -19,7 +19,7 @@ code {
   margin: 40px auto;
 }
 
-.default-button, .language-button {
+.default-button, .language-button, .table-button {
   color: #fff;
   border: 1px solid black;
   margin: 0 2px;
@@ -34,7 +34,18 @@ code {
 .language-button {
   min-width: 40px;
 }
-.chat-code-container{
-padding: 5px;
+
+.table-button {
+  margin: 0;
+  padding: 2 0 2 0;
+  color: black;
+  border: 1px solid #6C757D;
+  background-color: white;
+  height: auto;
+  min-width: auto;
+}
+
+.chat-code-container {
+  padding: 5px;
   border: 2px solid #6C757D;
 }

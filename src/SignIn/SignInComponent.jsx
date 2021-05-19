@@ -24,15 +24,18 @@ class SignInComponent extends Component {
 
 
   changeEmail(event) {
+    console.log(this.state.Email)
     this.setState({ Email: event.target.value });
   }
   changePassword(event) {
+    console.log(this.state.Password)
     this.setState({ Password: event.target.value });
   }
 
 
   validateEmail() {
     let regEmail = /^((^<>()\[\]\\.,;:\s@"]+(\.^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return true;
     return regEmail.test(this.state.Email);
   }
   validatePassword() {

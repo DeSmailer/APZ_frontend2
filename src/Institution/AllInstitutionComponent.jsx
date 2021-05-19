@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import { baseUrl, getCookie } from '../baseUrl';
 import { SetWord } from '../Translations/Translate';
+import { Table } from 'rsuite';
+
+const { Column, HeaderCell, Cell } = Table;
 
 class AllInstitutionComponent extends Component {
 
@@ -9,44 +12,49 @@ class AllInstitutionComponent extends Component {
         super(props);
 
         this.state = {
-            Id: 'Id',
-            columns: [
-                { field: 'name', headerName: SetWord('InstitutionName'), width: 400 },
-                { field: 'location', headerName: SetWord('Location'), width: 900 }
-            ],
-            rows: [],
-            currentRow: {
-                id: -1
-            }
+            data: []
         }
 
-        this.dataGridDemo = this.dataGridDemo.bind(this);
+        this.handleSortColumn = this.handleSortColumn.bind(this);
     }
 
-    dataGridDemo(state) {
-        return (
-            <div>
-                <div style={{ height: 620, width: '100%' }}>
-                    <DataGrid rows={state.rows} columns={state.columns} pageSize={10} />
-                </div>
-            </div >
-        );
+    getData() {
+        const { data, sortColumn, sortType } = this.state;
+
+        if (sortColumn && sortType) {
+            return data.sort((a, b) => {
+                let x = a[sortColumn];
+                let y = b[sortColumn];
+                if (typeof x === 'string') {
+                    x = x.charCodeAt();
+                }
+                if (typeof y === 'string') {
+                    y = y.charCodeAt();
+                }
+                if (sortType === 'asc') {
+                    return x - y;
+                } else {
+                    return y - x;
+                }
+            });
+        }
+        return data;
     }
 
-    fillRows(result) {
-        var res = [];
-        var i = 0;
-        result.forEach(element => {
-            res[i] = {
-                id: i,
-                name: element.name,
-                location: element.location,
-            };
-            i++;
+    handleSortColumn(sortColumn, sortType) {
+        this.setState({
+            loading: true
         });
-        return res;
-    }
 
+        setTimeout(() => {
+            this.setState({
+                sortColumn,
+                sortType,
+                loading: false
+            });
+        }, 500);
+    }
+    
     componentDidMount() {
 
         fetch(baseUrl + `/Institution/Get`, {
@@ -65,7 +73,7 @@ class AllInstitutionComponent extends Component {
                 (result) => {
                     console.log(result);
                     this.setState({
-                        rows: this.fillRows(result)
+                        data: result
                     });
                 },
                 (error) => {
@@ -78,7 +86,33 @@ class AllInstitutionComponent extends Component {
 
     render() {
         return (
-            this.dataGridDemo(this.state)
+            <div>
+                <div style={{ height: '100%'}}>
+                    <Table
+                        height={640}
+                        data={this.getData()}
+                        sortColumn={this.state.sortColumn}
+                        sortType={this.state.sortType}
+                        onSortColumn={this.handleSortColumn}
+                        loading={this.state.loading}
+                        onRowClick={data => {
+                            console.log(data);
+                        }}
+                    >
+                        <Column width={300} align="left" resizable sortable>
+                            <HeaderCell>{SetWord('InstitutionName')}</HeaderCell>
+                            <Cell dataKey="name" />
+                        </Column>
+
+                        <Column width={300} align="left" sortable>
+                            <HeaderCell>{SetWord('Location')}</HeaderCell>
+                            <Cell dataKey="location" />
+                        </Column>
+
+                    </Table>
+                </div>
+                
+            </div>
         );
     }
 }

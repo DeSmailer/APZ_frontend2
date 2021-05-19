@@ -11,6 +11,9 @@ export const SetWord = (word) => {
   else if (lang === "EN") {
     return en[word];
   }
+  else{
+    return en[word];
+  }
 }
 
 export const ToEN = (word) => {
