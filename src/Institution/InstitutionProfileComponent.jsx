@@ -110,9 +110,9 @@ class InstitutionProfileComponent extends Component {
       body: JSON.stringify(body),
       headers: {
         'Accept': 'application/json, text/plain, */*',
-        'Token': getCookie('token'),
+        /*'Token': getCookie('token'),
         'InstitutionId': getCookie('institutionId'),
-        'Role': getCookie('role'),
+        'Role': getCookie('role'),*/
         'Content-Type': 'application/json; charset=UTF-8'
       },
       credentials: 'same-origin'
@@ -144,9 +144,9 @@ class InstitutionProfileComponent extends Component {
       body: JSON.stringify(body),
       headers: {
         'Accept': 'application/json, text/plain, */*',
-        'Token': getCookie('token'),
+        /*'Token': getCookie('token'),
         'InstitutionId': getCookie('institutionId'),
-        'Role': getCookie('role'),
+        'Role': getCookie('role'),*/
         'Content-Type': 'application/json; charset=UTF-8'
       },
       credentials: 'same-origin'

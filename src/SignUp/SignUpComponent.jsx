@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
 import { SetWord } from '../Translations/Translate';
-import { baseUrl, getCookie } from '../baseUrl';
-
+import { baseUrl } from '../baseUrl';
 
 class SignUpComponent extends Component {
 
@@ -82,9 +81,9 @@ class SignUpComponent extends Component {
       body: JSON.stringify(body),
       headers: {
         'Accept': 'application/json, text/plain, */*',
-        'Token': getCookie('token'),
+        /*'Token': getCookie('token'),
         'InstitutionId': getCookie('institutionId'),
-        'Role': getCookie('role'),
+        'Role': getCookie('role'),*/
         'Content-Type': 'application/json; charset=UTF-8'
       },
       credentials: 'same-origin'
@@ -92,6 +91,7 @@ class SignUpComponent extends Component {
       .then(
         (response) => {
           if (response.ok) {
+            this.props.history.push('/signIn')
             alert("Ok");
           }
         },

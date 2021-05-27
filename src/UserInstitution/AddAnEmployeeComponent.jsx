@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
 import { SetWord } from '../Translations/Translate';
-import { baseUrl, getCookie } from '../baseUrl';
+import { baseUrl } from '../baseUrl';
+import Cookies from 'js-cookie';
 
 
 class AddAnEmployeeComponent extends Component {
@@ -50,9 +51,9 @@ class AddAnEmployeeComponent extends Component {
       body: JSON.stringify(body),
       headers: {
         'Accept': 'application/json, text/plain, */*',
-        'Token': getCookie('token'),
-        'InstitutionId': getCookie('institutionId'),
-        'Role': getCookie('role'),
+        'Token': Cookies.get('token'),
+        'InstitutionId': Cookies.get('institutionId'),
+        'Role': Cookies.get('role'),
         'Content-Type': 'application/json; charset=UTF-8'
       },
       credentials: 'same-origin'
@@ -64,7 +65,7 @@ class AddAnEmployeeComponent extends Component {
           }
         },
         (error) => {
-          alert(error);
+          alert("Помилочка");
         }
       );
   }

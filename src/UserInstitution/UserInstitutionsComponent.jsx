@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { SetWord } from '../Translations/Translate';
 import { baseUrl, getCookie } from '../baseUrl';
 import { DataGrid } from "@material-ui/data-grid"
-
+import Cookies from "js-cookie";
 
 class UserInstitutionsComponent extends Component {
- 
+
   constructor(props) {
     super(props);
 
@@ -20,24 +20,27 @@ class UserInstitutionsComponent extends Component {
       ],
       rows: [],
       selectionRowId: "",
-      currentRow:""
+      currentRow: "",
+      canRedirect: false
     }
 
     this.dataGridDemo = this.dataGridDemo.bind(this);
     this.setSelection = this.setSelection.bind(this);
-    this.setSelection = this.setSelection.bind(this);
+    this.signInLikeEmployee = this.signInLikeEmployee.bind(this);
+    this.renderViewButton = this.renderViewButton.bind(this);
   }
 
   setSelection(row) {
     this.setState({ currentRow: row });
-    console.log(this.state.currentRow)
+    if (this.state.currentRow !== "" && this.state.currentRow !== undefined) {
+      this.signInLikeEmployee()
+    }
+    console.log(row)
+    this.forceUpdate();
   }
 
   signInLikeEmployee() {
-    console.log(this.state.currentRow.role)
-    console.log(this.state.currentRow.institutionId)
     console.log("signInLikeEmployee")
-
     const body = {
       Token: getCookie('token'),
       Role: this.state.currentRow.role,
@@ -48,9 +51,9 @@ class UserInstitutionsComponent extends Component {
       body: JSON.stringify(body),
       headers: {
         'Accept': 'application/json, text/plain, */*',
-        'Token': getCookie('token'),
+        /*'Token': getCookie('token'),
         'InstitutionId': getCookie('institutionId'),
-        'Role': getCookie('role'),
+        'Role': getCookie('role'),*/
         'Content-Type': 'application/json; charset=UTF-8'
       },
       credentials: 'same-origin'
@@ -58,20 +61,45 @@ class UserInstitutionsComponent extends Component {
       .then(response => response.json())
       .then(
         (response) => {
-          console.log(response);
-          document.cookie = "token=" + response.token;
-          document.cookie = "institutionId=" + response.institutionId;
-          document.cookie = "role=" + response.role;
-          alert('Ok');
+
+          Cookies.set('token', response.token);
+          Cookies.set('institutionId', response.institutionId);
+          Cookies.set('role', response.role);
+          this.setState({
+            canRedirect: true
+          });
+          this.forceUpdate();
         },
         (error) => {
           console.log('Post account ', error);
           alert('Your account could not be posted\nError: ' + error);
           alert('мейл' + body.Mail +
             'пароль ' + body.Password);
-
         }
       )
+  }
+
+  writeID() {
+    return "ID=" + Cookies.get('institutionId');
+  }
+
+  renderViewButton() {
+    if (this.state.canRedirect) {
+      return (
+        <Link to={`/institutionProfile`}>
+          <button className="default-button" >
+            {SetWord("View institution")} {this.writeID()}
+          </button>
+        </Link>
+      );
+    } else {
+      return (
+        <button className="default-button" >
+          {SetWord("Double click on the line")}
+        </button>
+      )
+    }
+
   }
 
   dataGridDemo(state) {
@@ -81,18 +109,18 @@ class UserInstitutionsComponent extends Component {
 
         </div>
         <div style={{ height: 620, width: '100%' }}>
-          <DataGrid 
-          rows={state.rows} 
-          columns={state.columns} 
-          pageSize={10}
-          onSelectionModelChange={(newSelection) => {
-            this.setState({ selectionRowId: newSelection.selectionModel});
-            this.setSelection(this.state.rows[this.state.selectionRowId]);
-            
-            console.log(newSelection)
-        }}
+          <DataGrid
+            rows={state.rows}
+            columns={state.columns}
+            pageSize={10}
+            onSelectionModelChange={(newSelection) => {
+              this.setState({ selectionRowId: newSelection.selectionModel });
+              this.setSelection(this.state.rows[newSelection.selectionModel]);
+
+              console.log(newSelection)
+            }}
           />
-          
+
         </div>
         <div >
           <Link to={`/addInstitution`}>
@@ -100,15 +128,13 @@ class UserInstitutionsComponent extends Component {
               {SetWord("New institution")}
             </button>
           </Link>
-          <Link to={`/institutionProfile`}>
-          <button className="default-button" onClick={this.signInLikeEmployee}>
-            {SetWord("View institution")}
-          </button>
-          </Link>
+          {this.renderViewButton()}
         </div>
       </div >
     );
   }
+
+
 
   fillRows(result) {
     var res = [];
@@ -127,13 +153,21 @@ class UserInstitutionsComponent extends Component {
   }
 
   componentDidMount() {
+    Cookies.remove('token', { path: '/userInstitutions' });
+    Cookies.remove('institutionId', { path: '/userInstitutions' });
+    Cookies.remove('role', { path: '/userInstitutions' });
+    Cookies.remove('lang', { path: '/userInstitutions' });
+    const body = {
+      Token: getCookie('token'),
+    }
     fetch(baseUrl + `/InstitutionEmployee/GetUserJobs`, {
-      method: "GET",
+      method: "POST",
+      body: JSON.stringify(body),
       headers: {
         'Accept': 'application/json, text/plain, */*',
-        'Token': getCookie('token'),
+        /*'Token': getCookie('token'),
         'InstitutionId': getCookie('institutionId'),
-        'Role': getCookie('role'),
+        'Role': getCookie('role'),*/
         'Content-Type': 'application/json; charset=UTF-8'
       },
       credentials: 'same-origin'

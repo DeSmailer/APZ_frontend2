@@ -4,6 +4,7 @@ import { baseUrl, getCookie } from '../baseUrl';
 import { Link } from 'react-router-dom';
 import { SetWord } from '../Translations/Translate';
 import moment from "moment";
+import Cookies from 'js-cookie';
 
 class UserProfileComponent extends Component {
 
@@ -108,9 +109,9 @@ class UserProfileComponent extends Component {
         body: JSON.stringify(body),
         headers: {
           'Accept': 'application/json, text/plain, */*',
-          'Token': getCookie('token'),
-          'InstitutionId': getCookie('institutionId'),
-          'Role': getCookie('role'),
+          /*'Token': getCookie('token'),
+        'InstitutionId': getCookie('institutionId'),
+        'Role': getCookie('role'),*/
           'Content-Type': 'application/json; charset=UTF-8',
 
         },
@@ -137,9 +138,9 @@ class UserProfileComponent extends Component {
   }
 
   logOut() {
-    document.cookie = "token=";
-    document.cookie = "institutionId=-1";
-    document.cookie = "role=";
+    Cookies.remove('token');
+    Cookies.remove('institutionId');
+    Cookies.remove('role');
   }
 
   exportExcel() {
@@ -210,9 +211,12 @@ class UserProfileComponent extends Component {
               {SetWord("Confirm")}
             </button>
 
+            <Link to={`/signIn`}>
             <button onClick={this.logOut} className="default-button">
               {SetWord("LogOut")}
             </button>
+          </Link>
+            
           </Form>
 
 

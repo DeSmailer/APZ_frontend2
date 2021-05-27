@@ -1,4 +1,4 @@
-export const chatConnectionUrl = 'https://apzbackend.azurewebsites.net';
+export const chatConnectionUrl = 'https://localhost:5001';
 export const baseUrl = chatConnectionUrl + '/api';
 
 // export const azure = https://apzbackend.azurewebsites.net

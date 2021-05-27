@@ -36,9 +36,9 @@ class TopUpBalanceComponent extends Component {
             body: JSON.stringify(body),
             headers: {
                 'Accept': 'application/json, text/plain, */*',
-                'Token': getCookie('token'),
-                'InstitutionId': getCookie('institutionId'),
-                'Role': getCookie('role'),
+                /*'Token': getCookie('token'),
+        'InstitutionId': getCookie('institutionId'),
+        'Role': getCookie('role'),*/
                 'Content-Type': 'application/json; charset=UTF-8'
             },
             credentials: 'same-origin'

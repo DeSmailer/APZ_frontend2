@@ -26,7 +26,10 @@ class EmployeesOfTheInstitutionComponent extends Component {
         id: -1
       },
       woring: "",
-      isLoaded: false
+      selectionRowId: "",
+      currentRow: "",
+      isLoaded: false,
+      canRedirect: false
     }
 
     this.dataGridDemo = this.dataGridDemo.bind(this);
@@ -34,12 +37,45 @@ class EmployeesOfTheInstitutionComponent extends Component {
     this.setSelection = this.setSelection.bind(this);
     this.dismiss = this.dismiss.bind(this);
     this.reinstate = this.reinstate.bind(this);
+    this.renderViewButton = this.renderViewButton.bind(this);
   }
 
   setSelection(row) {
     this.setState({ currentRow: row });
-    console.log(this.state.currentRow)
-    console.log("Ид " + this.state.currentRow.role)
+    if (this.state.currentRow !== "" && this.state.currentRow !== undefined) {
+      this.setState({
+        canRedirect: true
+      });
+    }
+    console.log(row)
+    this.componentDidMount()
+  }
+
+  renderViewButton() {
+    if (this.state.canRedirect) {
+      return (
+        <div>
+          <button className="default-button" onClick={this.dismiss}>
+            {SetWord("Dismiss")}
+          </button>
+          <button className="default-button" onClick={this.reinstate}>
+            {SetWord("Reinstate")}
+          </button>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <button className="default-button">
+            {SetWord("Double click on the line")}
+          </button>
+          <button className="default-button">
+            {SetWord("Double click on the line")}
+          </button>
+        </div>
+      )
+    }
+
   }
 
   dismiss() {
@@ -64,19 +100,28 @@ class EmployeesOfTheInstitutionComponent extends Component {
         (response) => {
           if (response.ok) {
             alert("Ok");
+            this.setState({
+              canRedirect: false
+            });
+            this.componentDidMount()
+
           }
         },
         (error) => {
           alert(error);
+          this.setState({
+            canRedirect: false
+          });
         }
       );
+    this.componentDidMount()
   }
 
   reinstate() {
     const body = {
       InstitutionId: this.state.currentRow.institutionId - 0,
       UserId: this.state.currentRow.userId,
-      Role: this.state.currentRow.role,
+      Role: ToEN(this.state.currentRow.role),
     }
     fetch(baseUrl + `/InstitutionEmployee/Reinstate`, {
       method: 'POST',
@@ -94,12 +139,21 @@ class EmployeesOfTheInstitutionComponent extends Component {
         (response) => {
           if (response.ok) {
             alert("Ok");
+            this.setState({
+              canRedirect: false
+            });
+            this.componentDidMount()
+
           }
         },
         (error) => {
           alert(error);
+          this.setState({
+            canRedirect: false
+          });
         }
       );
+    this.componentDidMount()
   }
 
   dataGridDemo(state) {
@@ -109,17 +163,20 @@ class EmployeesOfTheInstitutionComponent extends Component {
 
         </div>
         <div style={{ height: 620, width: '100%' }}>
-          <DataGrid rows={state.rows} columns={state.columns} pageSize={10}
-            onSelectionChange={(newSelection) => { this.setSelection(this.state.rows[newSelection.rowIds]); }}
+          <DataGrid
+            rows={state.rows}
+            columns={state.columns}
+            pageSize={10}
+            onSelectionModelChange={(newSelection) => {
+              this.setState({ selectionRowId: newSelection.selectionModel });
+              this.setSelection(this.state.rows[newSelection.selectionModel]);
+
+              console.log(newSelection)
+            }}
           />
         </div>
         <div >
-          <button className="default-button" onClick={this.dismiss}>
-            {SetWord("Dismiss")}
-          </button>
-          <button className="default-button" onClick={this.reinstate}>
-            {SetWord("Reinstate")}
-          </button>
+          {this.renderViewButton()}
         </div>
       </div >
     );
@@ -163,9 +220,9 @@ class EmployeesOfTheInstitutionComponent extends Component {
       body: JSON.stringify(body),
       headers: {
         'Accept': 'application/json, text/plain, */*',
-        'Token': getCookie('token'),
+        /*'Token': getCookie('token'),
         'InstitutionId': getCookie('institutionId'),
-        'Role': getCookie('role'),
+        'Role': getCookie('role'),*/
         'Content-Type': 'application/json; charset=UTF-8'
       },
       credentials: 'same-origin'

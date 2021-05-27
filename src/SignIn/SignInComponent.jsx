@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
 import { Button } from 'reactstrap';
 import { SetWord } from '../Translations/Translate';
-import { baseUrl, getCookie } from '../baseUrl';
+import { baseUrl } from '../baseUrl';
 
 
 class SignInComponent extends Component {
@@ -53,9 +53,9 @@ class SignInComponent extends Component {
       body: JSON.stringify(body),
       headers: {
         'Accept': 'application/json, text/plain, */*',
-        'Token': getCookie('token'),
+        /*'Token': getCookie('token'),
         'InstitutionId': getCookie('institutionId'),
-        'Role': getCookie('role'),
+        'Role': getCookie('role'),*/
         'Content-Type': 'application/json; charset=UTF-8'
       },
       credentials: 'same-origin'
@@ -67,6 +67,7 @@ class SignInComponent extends Component {
           document.cookie = "token=" + response.token;
           document.cookie = "institutionId=" + response.institutionId;
           document.cookie = "role=" + response.role;
+          this.props.history.push('/userProfile')
           alert('Ok');
         },
         (error) => {
