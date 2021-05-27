@@ -141,6 +141,8 @@ class UserProfileComponent extends Component {
     Cookies.remove('token');
     Cookies.remove('institutionId');
     Cookies.remove('role');
+    Cookies.remove('chatToken');
+    Cookies.remove('chatId');
   }
 
   exportExcel() {

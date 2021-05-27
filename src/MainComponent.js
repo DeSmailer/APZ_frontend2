@@ -13,6 +13,9 @@ import EmployeesOfTheInstitution from './UserInstitution/EmployeesOfTheInstituti
 import AddAnEmployee from './UserInstitution/AddAnEmployeeComponent';
 import HomePage from './Home/HomePageComponent';
 import MyChats from './Chat/MyChatsComponent';
+import ChatCodeField from './Chat/ChatCodeFieldComponent';
+import ChatPage from './Chat/Chat';
+
 
 import { Switch, Route, Redirect } from 'react-router-dom';
 class Main extends Component {
@@ -36,7 +39,9 @@ class Main extends Component {
                     <Route path="/addInstitution" component={AddInstitution}></Route>
                     <Route path="/institutionProfile" component={InstitutionProfile}></Route>
                     <Route path="/myChats" component={MyChats}></Route>
-                    
+                    <Route path="/chatCodeField" component={ChatCodeField}></Route>
+                    <Route path="/chatPage" component={ChatPage}></Route>
+
                     {/* адміністратор */}
                     <Route path="/topUpBalance" component={TopUpBalance}></Route>
                     <Route path="/paymentHistory" component={PaymentHistory}></Route>

@@ -42,7 +42,7 @@ class MyChatsComponent extends Component {
     }
 
     writeID() {
-        return "ID=" + Cookies.get('institutionId');
+        return "ID=" + Cookies.get('chatId');
     }
 
     renderViewButton() {
@@ -50,7 +50,7 @@ class MyChatsComponent extends Component {
             return (
                 <Link to={`/institutionProfile`}>
                     <button className="default-button" >
-                        {SetWord("View institution")} {this.writeID()}
+                        {SetWord("Go to chat")} {this.writeID()}
                     </button>
                 </Link>
             );
@@ -64,18 +64,15 @@ class MyChatsComponent extends Component {
 
     }
 
-    getChatToken(){
-        console.log("getChatToken")
-    }
-    
-    getChatToken2() {
+    getChatToken() {
         console.log("getChatToken")
         const body = {
-            Token: getCookie('token'),
-            Role: this.state.currentRow.role,
-            InstitutionId: "" + this.state.currentRow.institutionId
+            Id: this.state.currentRow.chatId,
+            InitiatorId: this.state.currentRow.initiatorId,
+            RecipientId: this.state.currentRow.recipientId,
+            InstitutionId: this.state.currentRow.institutionId
         }
-        fetch(baseUrl + `/User/LoginLikeEmployee`, {
+        fetch(baseUrl + `/Chat/GetChatToken`, {
             method: 'POST',
             body: JSON.stringify(body),
             headers: {
@@ -87,10 +84,8 @@ class MyChatsComponent extends Component {
             .then(response => response.json())
             .then(
                 (response) => {
-
-                    Cookies.set('token', response.token);
-                    Cookies.set('institutionId', response.institutionId);
-                    Cookies.set('role', response.role);
+                    Cookies.set('chatToken', response.chatToken);
+                    Cookies.set('chatId', response.chatId);
                     this.setState({
                         canRedirect: true
                     });
@@ -98,9 +93,7 @@ class MyChatsComponent extends Component {
                 },
                 (error) => {
                     console.log('Post account ', error);
-                    alert('Your account could not be posted\nError: ' + error);
-                    alert('мейл' + body.Mail +
-                        'пароль ' + body.Password);
+                    alert(error);
                 }
             )
     }
@@ -122,11 +115,6 @@ class MyChatsComponent extends Component {
                     />
                 </div>
                 <div >
-                    <Link to={`/addInstitution`}>
-                        <button className="default-button" >
-                            {SetWord("New institution")}
-                        </button>
-                    </Link>
                     {this.renderViewButton()}
                 </div>
             </div >
@@ -154,6 +142,10 @@ class MyChatsComponent extends Component {
     }
 
     componentDidMount() {
+        Cookies.remove('token', { path: '/myChats' });
+        Cookies.remove('institutionId', { path: '/myChats' });
+        Cookies.remove('role', { path: '/myChats' });
+        Cookies.remove('lang', { path: '/myChats' });
         const body = {
             Token: getCookie('token'),
             Role: this.state.currentRow.role,

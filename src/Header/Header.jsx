@@ -28,6 +28,7 @@ class HeaderComponent extends Component {
 
             <Nav className="mr-auto">
               <Nav.Link href="/allInstitution">{SetWord("All institutions")}</Nav.Link>
+              <Nav.Link href="/chatCodeField">{SetWord("Go to chat")}</Nav.Link>
             </Nav>
 
             <Nav>
