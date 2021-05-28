@@ -5,22 +5,24 @@ import ChatWindow from './ChatWindow/ChatWindow';
 import ChatInput from './ChatInput/ChatInput';
 import { baseUrl, chatConnectionUrl, getCookie } from '../baseUrl';
 
+const connection = new HubConnectionBuilder()
+            .withUrl(chatConnectionUrl + '/hubs/chat')
+            .withAutomaticReconnect()
+            .build();
+
 const Chat = () => {
     const [chat, setChat] = useState([]);
     const latestChat = useRef(null);
 
     latestChat.current = chat;
     useEffect(() => {
-        const connection = new HubConnectionBuilder()
-            .withUrl(chatConnectionUrl + '/hubs/chat')
-            .withAutomaticReconnect()
-            .build();
+        
 
         connection.start()
             .then(result => {
                 alert('Connected!');
 
-                connection.invoke("JoinGroup", getCookie("chatToken"))  //JoinGroup is C# method name
+                connection.invoke("JoinGroup", getCookie("chatToken"))
                     .catch(err => {
                         console.log(err);
                     });
@@ -49,8 +51,6 @@ const Chat = () => {
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
                     'Token': getCookie('token'),
-                    /*'InstitutionId': getCookie('institutionId'),
-                    'Role': getCookie('role'),*/
                     'Content-Type': 'application/json; charset=UTF-8'
                 },
             });
@@ -60,6 +60,13 @@ const Chat = () => {
         }
     }
 
+    window.addEventListener('beforeunload', function (event) {
+        connection.invoke("OnDisconnectedAsync", getCookie("chatToken"))
+            .catch(err => {
+                console.log(err);
+            });
+    }, false);
+
     return (
         <div>
             <ChatInput sendMessage={sendMessage} />
@@ -67,6 +74,7 @@ const Chat = () => {
             <ChatWindow chat={chat} />
         </div>
     );
+
 };
 
 export default Chat;

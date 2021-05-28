@@ -1,9 +1,9 @@
 import React from 'react';
 
 const Message = (props) => (
-    <div style={{ background: "#eee", borderRadius: '5px', padding: '0 10px' }}>
-        <p><strong>{props.user}</strong> says:</p>
-        <p>{props.message}</p>
+    <div className="message-box">
+        <p className="message-box-header"><strong>{props.userName}:</strong></p>
+        <p className="chat-box-body">{props.message}</p>
     </div>
 );
 

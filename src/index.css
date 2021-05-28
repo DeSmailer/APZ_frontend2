@@ -49,3 +49,28 @@ code {
   padding: 5px;
   border: 2px solid #6C757D;
 }
+
+.chat-box {
+  margin: 10px auto 0px auto ;
+  border: 1px solid black;
+  border-radius: 20px 20px 0px 0px;
+  max-width: 600px;
+}
+
+.message-box {
+  background-color: #eeeeee;
+  border-radius: 20px 20px 0px 0px;
+}
+
+.chat-box-body {
+  margin: 0px auto;
+  border-radius: 20px;
+  padding: 3px 10px;
+}
+
+.message-box-header {
+  background-color: #343A40;
+  color: #ffffff;
+  border-radius: 20px 20px 0px 0px;
+  padding: 6px;
+}

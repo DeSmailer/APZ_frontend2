@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { getCookie } from '../../baseUrl';
 
 const ChatInput = (props) => {
-    const [chatId, setChatId] = useState('');
-    const [senderId, setSenderId] = useState('');
     const [text, setText] = useState('');
     const onSubmit = (e) => {
         e.preventDefault();
@@ -17,7 +15,6 @@ const ChatInput = (props) => {
             alert('Please insert an user and a message.');
         }
     }
-
     
     const onTextUpdate = (e) => {
         setText(e.target.value);

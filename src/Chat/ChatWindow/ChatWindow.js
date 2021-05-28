@@ -6,11 +6,11 @@ const ChatWindow = (props) => {
     const chat = props.chat
         .map(m => <Message 
             key={Date.now() * Math.random()}
-            user={m.user}
+            userName={m.userName}
             message={m.message}/>);
             console.log(props)
     return(
-        <div>
+        <div className="chat-box">
             {chat}
         </div>
     )
