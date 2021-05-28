@@ -20,6 +20,12 @@ const Chat = () => {
             .then(result => {
                 alert('Connected!');
 
+                connection.invoke("JoinGroup", getCookie("chatToken"))  //JoinGroup is C# method name
+                    .catch(err => {
+                        console.log(err);
+                    });
+
+
                 connection.on('ReceiveMessage', message => {
                     const updatedChat = [...latestChat.current];
                     updatedChat.push(message);
@@ -46,7 +52,7 @@ const Chat = () => {
                     /*'InstitutionId': getCookie('institutionId'),
                     'Role': getCookie('role'),*/
                     'Content-Type': 'application/json; charset=UTF-8'
-                  },
+                },
             });
         }
         catch (e) {
