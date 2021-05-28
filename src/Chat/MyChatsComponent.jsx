@@ -48,7 +48,7 @@ class MyChatsComponent extends Component {
     renderViewButton() {
         if (this.state.canRedirect) {
             return (
-                <Link to={`/institutionProfile`}>
+                <Link to={`/chatPage`}>
                     <button className="default-button" >
                         {SetWord("Go to chat")} {this.writeID()}
                     </button>

@@ -30,11 +30,10 @@ const Chat = () => {
             .catch(e => alert('Connection failed: ', e));
     }, []);
 
-    const sendMessage = async (chatId, senderId, text) => {
+    const sendMessage = async (chatToken, text) => {
         const chatMessage = {
-            chatId: chatId-0,
-            senderId: senderId-0,
-            text: text
+            ChatToken: chatToken,
+            Message: text
         };
 
         try {
@@ -42,8 +41,12 @@ const Chat = () => {
                 method: 'POST',
                 body: JSON.stringify(chatMessage),
                 headers: {
-                    'Content-Type': 'application/json'
-                }
+                    'Accept': 'application/json, text/plain, */*',
+                    'Token': getCookie('token'),
+                    /*'InstitutionId': getCookie('institutionId'),
+                    'Role': getCookie('role'),*/
+                    'Content-Type': 'application/json; charset=UTF-8'
+                  },
             });
         }
         catch (e) {
