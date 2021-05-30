@@ -51,26 +51,84 @@ code {
 }
 
 .chat-box {
-  margin: 10px auto 0px auto ;
+  margin: 10px auto 0px auto;
   border: 1px solid black;
-  border-radius: 20px 20px 0px 0px;
+  border-radius: 10px;
   max-width: 600px;
+  overflow: auto;
+  max-height: 540px;
+  height: 540px;
 }
 
 .message-box {
   background-color: #eeeeee;
-  border-radius: 20px 20px 0px 0px;
+  border-radius: 20px 20px 20px 20px;
+  margin: 20px;
 }
 
 .chat-box-body {
   margin: 0px auto;
   border-radius: 20px;
-  padding: 3px 10px;
+  padding: 2px 25px 10px 25px;
+  word-wrap: break-word;
+  /* Перенос слов */
 }
 
 .message-box-header {
   background-color: #343A40;
   color: #ffffff;
   border-radius: 20px 20px 0px 0px;
-  padding: 6px;
+  padding: 6px 16px;
+  margin: 0px;
+  word-wrap: break-word;
+}
+
+.input-text {
+  border: 1px solid black;
+  max-width: 500px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 400px;
+}
+
+.chat-button {
+  margin-left: 30px;
+}
+
+.message-time {
+  float: right;
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.input-form {
+  margin-left: auto;
+  margin-right: auto;
+  max-height: 80px;
+  max-width: 600px;
+  padding: 0px;
+  padding-bottom: 20px;
+  border: 1px solid white;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 70px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #343A40;
+  border-radius: 70px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6C757D;
 }

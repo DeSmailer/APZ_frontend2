@@ -4,11 +4,14 @@ import { HubConnectionBuilder } from '@microsoft/signalr';
 import ChatWindow from './ChatWindow/ChatWindow';
 import ChatInput from './ChatInput/ChatInput';
 import { baseUrl, chatConnectionUrl, getCookie } from '../baseUrl';
+import { Button } from 'bootstrap';
 
 const connection = new HubConnectionBuilder()
-            .withUrl(chatConnectionUrl + '/hubs/chat')
-            .withAutomaticReconnect()
-            .build();
+    .withUrl(chatConnectionUrl + '/hubs/chat')
+    .withAutomaticReconnect()
+    .build();
+
+
 
 const Chat = () => {
     const [chat, setChat] = useState([]);
@@ -16,11 +19,11 @@ const Chat = () => {
 
     latestChat.current = chat;
     useEffect(() => {
-        
+
 
         connection.start()
             .then(result => {
-                alert('Connected!');
+                console.log('Connected!');
 
                 connection.invoke("JoinGroup", getCookie("chatToken"))
                     .catch(err => {
@@ -33,6 +36,8 @@ const Chat = () => {
                     updatedChat.push(message);
 
                     setChat(updatedChat);
+
+                    toBottom();
                 });
             })
             .catch(e => alert('Connection failed: ', e));
@@ -60,18 +65,22 @@ const Chat = () => {
         }
     }
 
+    function toBottom() {
+        var block = document.getElementById("chatWindow");
+        block.scrollTop = block.scrollHeight;
+    }
+
     window.addEventListener('beforeunload', function (event) {
         connection.invoke("OnDisconnectedAsync", getCookie("chatToken"))
             .catch(err => {
                 console.log(err);
             });
     }, false);
-
     return (
         <div>
-            <ChatInput sendMessage={sendMessage} />
-            <hr />
             <ChatWindow chat={chat} />
+            <hr />
+            <ChatInput sendMessage={sendMessage} />
         </div>
     );
 
