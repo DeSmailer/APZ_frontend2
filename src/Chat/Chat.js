@@ -18,30 +18,75 @@ const Chat = () => {
     const latestChat = useRef(null);
 
     latestChat.current = chat;
+    const [isLoaded, setLoad] = useState("");
+
+
     useEffect(() => {
 
+        console.log(connection.connectionId)
+        if (connection.connectionId == null) {
+            connection.start()
+                .then(result => {
+                    console.log('Connected!');
 
-        connection.start()
-            .then(result => {
-                console.log('Connected!');
+                    connection.invoke("JoinGroup", getCookie("chatToken"))
+                        .catch(err => {
+                            console.log(err);
+                        });
 
-                connection.invoke("JoinGroup", getCookie("chatToken"))
-                    .catch(err => {
-                        console.log(err);
+
+                    connection.on('ReceiveMessage', message => {
+                        const updatedChat = [...latestChat.current];
+                        updatedChat.push(message);
+
+                        setChat(updatedChat);
+
+                        toBottom();
                     });
 
+                    const token = {
+                        Token: getCookie("chatToken")
+                    };
 
-                connection.on('ReceiveMessage', message => {
-                    const updatedChat = [...latestChat.current];
-                    updatedChat.push(message);
-
-                    setChat(updatedChat);
-
-                    toBottom();
-                });
-            })
-            .catch(e => alert('Connection failed: ', e));
+                    fetch(baseUrl + '/Chat/GetAllMessages', {
+                        method: 'POST',
+                        body: JSON.stringify(token),
+                        headers: {
+                            'Accept': 'application/json, text/plain, */*',
+                            'Token': getCookie('token'),
+                            'Content-Type': 'application/json; charset=UTF-8'
+                        },
+                        credentials: 'same-origin'
+                    })
+                        .then(result => result.json())
+                        .then(
+                            (result) => {
+                                console.log(result);
+                                fillChat(result);
+                                setLoad(true);
+                                console.log()
+                            },
+                            (error) => {
+                                this.setState({
+                                    error
+                                });
+                            }
+                        );
+                })
+        }
+        else {
+            window.location.reload();
+        }
     }, []);
+
+    function fillChat(oldMessages) {
+        const updatedChat = [...latestChat.current];
+        oldMessages.forEach(message => {
+            console.log(message);
+            updatedChat.push(message);
+        });
+        setChat(updatedChat);
+    }
 
     const sendMessage = async (chatToken, text) => {
         const chatMessage = {
@@ -76,13 +121,26 @@ const Chat = () => {
                 console.log(err);
             });
     }, false);
-    return (
-        <div>
-            <ChatWindow chat={chat} />
-            <hr />
-            <ChatInput sendMessage={sendMessage} />
-        </div>
-    );
+    if (isLoaded == false) {
+        return (
+            <div>
+                <div class="fa-3x" className="chat-box center">
+                    <i class="fas fa-spinner fa-pulse"></i>
+                </div>
+                <hr />
+                <ChatInput sendMessage={sendMessage} />
+            </div>
+        );
+    }
+    else {
+        return (
+            <div>
+                <ChatWindow chat={chat} />
+                <hr />
+                <ChatInput sendMessage={sendMessage} />
+            </div>
+        );
+    }
 
 };
 
