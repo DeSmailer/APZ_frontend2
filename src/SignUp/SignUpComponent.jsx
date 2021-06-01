@@ -58,7 +58,7 @@ class SignUpComponent extends Component {
     return this.state.Surname.length > 0;
   }
   validateEmail() {
-    let regEmail = /^((^<>()\[\]\\.,;:\s@"]+(\.^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let regEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     return regEmail.test(this.state.Email);
   }
   validatePassword() {
@@ -108,7 +108,7 @@ class SignUpComponent extends Component {
       this.SignUp();
       event.preventDefault();
     } else {
-      alert("не всі поля заповнені вірно");
+      alert(SetWord("Not all fields are filled in correctly"));
     }
   }
 
@@ -117,6 +117,8 @@ class SignUpComponent extends Component {
       <div className="default-div">
 
         <Form >
+          <h4>{SetWord("SignUp")}</h4>
+
           <Form.Group controlId="formBasicName">
             <Form.Label>{SetWord("Name")}</Form.Label>
             <Form.Control

@@ -34,8 +34,7 @@ class SignInComponent extends Component {
 
 
   validateEmail() {
-    let regEmail = /^((^<>()\[\]\\.,;:\s@"]+(\.^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return true;
+    let regEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     return regEmail.test(this.state.Email);
   }
   validatePassword() {
@@ -85,7 +84,7 @@ class SignInComponent extends Component {
       this.SignIn();
       event.preventDefault();
     } else {
-      alert("не всі поля заповнені вірно");
+      alert(SetWord("Not all fields are filled in correctly"));
     }
 
   }
@@ -95,7 +94,7 @@ class SignInComponent extends Component {
       <div className="default-div">
 
         <Form >
-
+        <h4>{SetWord("SignIn")}</h4>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>{SetWord("Email")}</Form.Label>
             <Form.Control

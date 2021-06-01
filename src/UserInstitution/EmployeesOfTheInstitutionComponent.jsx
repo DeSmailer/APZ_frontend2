@@ -25,7 +25,7 @@ class EmployeesOfTheInstitutionComponent extends Component {
       currentRow: {
         id: -1
       },
-      woring: "",
+      working: "",
       selectionRowId: "",
       currentRow: "",
       isLoaded: false,
@@ -96,16 +96,19 @@ class EmployeesOfTheInstitutionComponent extends Component {
       },
       credentials: 'same-origin'
     })
+      .then(response => response.text())
       .then(
         (response) => {
-          if (response.ok) {
+          if (response === "true") {
             alert("Ok");
-            this.setState({
-              canRedirect: false
-            });
-            this.componentDidMount()
-
           }
+          else if (response === "false") {
+            alert(SetWord("Сannot be released"));
+          }
+          this.setState({
+            canRedirect: false
+          });
+          this.componentDidMount()
         },
         (error) => {
           alert(error);
@@ -189,11 +192,11 @@ class EmployeesOfTheInstitutionComponent extends Component {
 
       if (element.isWorking) {
         this.setState({
-          woring: 'Working'
+          working: 'Working'
         })
       } else {
         this.setState({
-          woring: 'NotWorking'
+          working: 'NotWorking'
         })
       }
       res[i] = {
@@ -205,7 +208,7 @@ class EmployeesOfTheInstitutionComponent extends Component {
         userName: element.userName,
         userSurname: element.userSurname,
         role: SetWord(element.role),
-        isWorking: SetWord(this.state.woring)
+        isWorking: SetWord(this.state.working)
       };
       i++;
     });

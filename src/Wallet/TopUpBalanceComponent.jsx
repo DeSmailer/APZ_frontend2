@@ -60,7 +60,7 @@ class TopUpBalanceComponent extends Component {
             this.topUpBalance();
             event.preventDefault();
         } else {
-            alert("не всі поля заповнені вірно");
+            alert(SetWord("Not all fields are filled in correctly"));
         }
 
     }
@@ -70,6 +70,8 @@ class TopUpBalanceComponent extends Component {
             <div className="default-div">
 
                 <Form >
+                <h4>{SetWord("Replenishment of the balance")}</h4>
+                
                     <Form.Group controlId="formBasicAmount">
                         <Form.Label>{SetWord("Amount")}</Form.Label>
                         <Form.Control

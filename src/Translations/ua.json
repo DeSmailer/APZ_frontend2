@@ -51,7 +51,7 @@
     "Export": "Експорт",
     "Home": "Головна",
     "All institutions": "Всі заклади",
-    "SignUp": "Регістрація",
+    "SignUp": "Реєстрація",
     "SignIn": "Авторизація",
     "admin": "Адміністратор",
     "employee": "Працівник",
@@ -70,5 +70,10 @@
     "Go to chat": "Перейти до чату ",
     "Chat Code": "Код чату",
     "Enter chat code": "Введіть чат код",
+    "Сannot be released": "Неможливо звільнити",
+    "Institution profile": "Профіль закладу",
+    "Not all fields are filled in correctly": "Не всі поля заповнені вірно",
+    "Replenishment of the balance": "Поповнення балансу",
+    "Send": "Відправити",
     "": ""
 }

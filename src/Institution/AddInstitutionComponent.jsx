@@ -49,9 +49,9 @@ class AddInstitutionComponent extends Component {
       body: JSON.stringify(body),
       headers: {
         'Accept': 'application/json, text/plain, */*',
-        'Token': getCookie('token'),
+        /*'Token': getCookie('token'),
         'InstitutionId': getCookie('institutionId'),
-        'Role': getCookie('role'),
+        'Role': getCookie('role'),*/
         'Content-Type': 'application/json; charset=UTF-8'
       },
       credentials: 'same-origin'
@@ -73,7 +73,7 @@ class AddInstitutionComponent extends Component {
       this.createInstitution();
       event.preventDefault();
     } else {
-      alert("не всі поля заповнені вірно");
+      alert(SetWord("Not all fields are filled in correctly"));
     }
 
   }
@@ -81,7 +81,7 @@ class AddInstitutionComponent extends Component {
   render() {
     return (
       <div className="default-div">
-
+        <h4>{SetWord("New institution")}</h4>
         <Form >
           <Form.Group controlId="formBasicName">
             <Form.Label>{SetWord("Institution name")}</Form.Label>
@@ -102,8 +102,8 @@ class AddInstitutionComponent extends Component {
           </Form.Group>
 
           <button className="default-button" onClick={this.handleSubmit}>
-          {SetWord("Confirm")}
-              </button>
+            {SetWord("Confirm")}
+          </button>
         </Form>
       </div>
 

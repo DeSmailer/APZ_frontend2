@@ -121,6 +121,7 @@ const Chat = () => {
                 console.log(err);
             });
     }, false);
+    
     if (isLoaded == false) {
         return (
             <div>

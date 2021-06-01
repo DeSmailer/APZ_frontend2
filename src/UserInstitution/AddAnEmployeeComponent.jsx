@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
-import { SetWord } from '../Translations/Translate';
+import { SetWord, ToEN } from '../Translations/Translate';
 import { baseUrl } from '../baseUrl';
 import Cookies from 'js-cookie';
 
@@ -44,7 +44,7 @@ class AddAnEmployeeComponent extends Component {
   AddAnEmployee() {
     const body = {
       UserId: this.state.UserId - 0,
-      Role: this.state.Role,
+      Role: ToEN(this.state.Role),
     }
     fetch(baseUrl + `/InstitutionEmployee/Add`, {
       method: 'POST',
@@ -75,7 +75,7 @@ class AddAnEmployeeComponent extends Component {
       this.AddAnEmployee();
       event.preventDefault();
     } else {
-      alert("не всі поля заповнені вірно");
+      alert(SetWord("Not all fields are filled in correctly"));
     }
   }
 
@@ -84,6 +84,7 @@ class AddAnEmployeeComponent extends Component {
       <div className="default-div">
 
         <Form >
+        <h4>{SetWord("Add an employee")}</h4>
           <Form.Group controlId="formBasicUserId">
             <Form.Label>{SetWord("UserId")}</Form.Label>
             <Form.Control
@@ -98,8 +99,8 @@ class AddAnEmployeeComponent extends Component {
             <Form.Control as="select"
               onChange={this.changeRole}
               value={this.state.Role}            >
-              <option>employee</option>
-              <option>admin</option>
+              <option>{SetWord("employee")}</option>
+              <option>{SetWord("admin")}</option>
             </Form.Control>
 
           </Form.Group>

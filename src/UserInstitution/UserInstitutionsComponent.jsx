@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { SetWord } from '../Translations/Translate';
+import { SetWord, ToEN } from '../Translations/Translate';
 import { baseUrl, getCookie } from '../baseUrl';
 import { DataGrid } from "@material-ui/data-grid"
 import Cookies from "js-cookie";
@@ -43,7 +43,7 @@ class UserInstitutionsComponent extends Component {
     console.log("signInLikeEmployee")
     const body = {
       Token: getCookie('token'),
-      Role: this.state.currentRow.role,
+      Role:  ToEN(this.state.currentRow.role),
       InstitutionId: "" + this.state.currentRow.institutionId
     }
     fetch(baseUrl + `/User/LoginLikeEmployee`, {
@@ -144,7 +144,7 @@ class UserInstitutionsComponent extends Component {
         id: i,
         institutionId: element.institutionId,
         institutionName: element.institutionName,
-        role: element.role,
+        role: SetWord(element.role),
         isWorking: SetWord("Working")
       };
       i++;

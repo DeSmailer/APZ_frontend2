@@ -67,14 +67,14 @@ class ChatCodeFieldComponent extends Component {
             this.openChat();
             event.preventDefault();
         } else {
-            alert("не всі поля заповнені вірно");
+            alert(SetWord("Not all fields are filled in correctly"));
         }
     }
 
     render() {
         return (
             <div className="default-div">
-
+                <h4>{SetWord("Chat code")}</h4>
                 <Form >
                     <Form.Group controlId="formBasicChatCode">
                         <Form.Label>{SetWord("Chat Code")}</Form.Label>

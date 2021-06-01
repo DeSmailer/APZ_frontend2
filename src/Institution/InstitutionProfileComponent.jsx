@@ -151,6 +151,15 @@ class InstitutionProfileComponent extends Component {
       },
       credentials: 'same-origin'
     })
+      .then(result => result.json())
+      .then(
+        (result) => {
+          alert("Ok")
+        },
+        (error) => {
+          alert(error)
+        }
+      );
   }
 
   handleSubmit = event => {
@@ -158,9 +167,8 @@ class InstitutionProfileComponent extends Component {
       this.updateProfile();
       event.preventDefault();
     } else {
-      alert("не всі поля заповнені вірно");
+      alert(SetWord("Not all fields are filled in correctly"));
     }
-
   }
 
 
@@ -171,7 +179,7 @@ class InstitutionProfileComponent extends Component {
         <div className="default-div">
 
           <Form >
-
+            <h4>{SetWord("Institution profile")}</h4>
             <Form.Group controlId="formBasicId">
               <Form.Label>{SetWord("Id")}</Form.Label>
               <Form.Control
@@ -210,7 +218,7 @@ class InstitutionProfileComponent extends Component {
           <Form >
 
             <Form.Group controlId="formBasicCurrentBalance">
-              <Form.Label>{SetWord("Current Balance")}</Form.Label>
+              <h4>{SetWord("Current Balance")}</h4>
               <Form.Control
                 type="text"
                 placeholder={SetWord("Current Balance")}

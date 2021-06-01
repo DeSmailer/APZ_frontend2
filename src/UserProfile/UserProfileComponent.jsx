@@ -94,7 +94,7 @@ class UserProfileComponent extends Component {
       this.updateProfile();
       event.preventDefault();
     } else {
-      alert("не всі поля заповнені вірно");
+      alert(SetWord("Not all fields are filled in correctly"));
     }
 
   }
@@ -170,7 +170,7 @@ class UserProfileComponent extends Component {
     return (
       <div>
         <div className="default-div">
-
+          <h4>{SetWord("Profile")}</h4>
           <Form >
             <Form.Group controlId="formBasicId">
               <Form.Label>{SetWord("Id")}</Form.Label>
@@ -214,17 +214,17 @@ class UserProfileComponent extends Component {
             </button>
 
             <Link to={`/signIn`}>
-            <button onClick={this.logOut} className="default-button">
-              {SetWord("LogOut")}
-            </button>
-          </Link>
-            
+              <button onClick={this.logOut} className="default-button">
+                {SetWord("LogOut")}
+              </button>
+            </Link>
+
           </Form>
 
 
         </div>
         <div className="default-div">
-          <h3>{SetWord("Interface language")}</h3>
+          <h4>{SetWord("Interface language")}</h4>
           <button onClick={this.setLanguageUA} className="language-button">
             UA
           </button>
@@ -234,7 +234,7 @@ class UserProfileComponent extends Component {
         </div>
 
         <div className="default-div">
-          <h3>{SetWord("My institutions")}</h3>
+          <h4>{SetWord("My institutions")}</h4>
           <Link to={`/userInstitutions/`}>
             <button className="default-button">
               {SetWord("View")}
@@ -243,7 +243,7 @@ class UserProfileComponent extends Component {
         </div>
 
         <div className="default-div">
-          <h3>{SetWord("Export/Import")}</h3>
+          <h4>{SetWord("Export/Import")}</h4>
           <button onClick={this.exportExcel} className="language-button">
             {SetWord("Export")}
           </button>
