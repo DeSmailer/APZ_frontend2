@@ -67,9 +67,7 @@ const Chat = () => {
                                 console.log()
                             },
                             (error) => {
-                                this.setState({
-                                    error
-                                });
+                                console.log(error)
                             }
                         );
                 })
@@ -121,7 +119,7 @@ const Chat = () => {
                 console.log(err);
             });
     }, false);
-    
+
     if (isLoaded == false) {
         return (
             <div>
